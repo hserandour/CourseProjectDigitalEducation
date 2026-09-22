@@ -9,7 +9,6 @@
  */
 
 import type * as chatbot from "../chatbot.js";
-import type * as messages from "../messages.js";
 import type * as participants from "../participants.js";
 import type * as questionnaires from "../questionnaires.js";
 
@@ -21,7 +20,6 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   chatbot: typeof chatbot;
-  messages: typeof messages;
   participants: typeof participants;
   questionnaires: typeof questionnaires;
 }>;
