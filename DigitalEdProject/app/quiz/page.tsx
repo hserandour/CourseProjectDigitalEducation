@@ -2,7 +2,10 @@
 
 import {
   useMutation,
+  useQuery,
 } from "convex/react";
+
+import type { Id } from "@/convex/_generated/dataModel";
 
 import { api } from "@/convex/_generated/api";
 
@@ -30,7 +33,14 @@ export default function QuizPage() {
   const router = useRouter();
 
   const participantId =
-    getParticipantId();
+    getParticipantId() as Id<"participants"> | null;
+  
+  const participant = useQuery(
+    api.participants.get,
+    participantId
+      ? { participantId }
+      : "skip",
+  );
 
   const saveAnswers =
     useMutation(
@@ -62,13 +72,9 @@ export default function QuizPage() {
               return;
             }
 
-            // We need the pseudonym here.
-            // In the final version use
-            // useQuery(api.participants.get).
-            const participant =
-              await getParticipant(
-                participantId,
-              );
+            if (!participant) {
+              return;
+            }
 
             await saveAnswers({
               participantId:
@@ -95,13 +101,5 @@ export default function QuizPage() {
         />
       </main>
     </ParticipantGuard>
-  );
-}
-
-async function getParticipant(
-  _id: string,
-) {
-  throw new Error(
-    "Replace with useQuery(api.participants.get)",
   );
 }

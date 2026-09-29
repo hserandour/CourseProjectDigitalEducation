@@ -4,29 +4,64 @@ import { Message } from "@/app/product/Chat/Message";
 import { MessageList } from "@/app/product/Chat/MessageList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useMutation, useQuery } from "convex/react";
-import { FormEvent, useState } from "react";
+import { useAction, useQuery } from "convex/react";
+import { useState } from "react";
 import { api } from "../../../convex/_generated/api";
+import type { Id } from "../../../convex/_generated/dataModel";
 
-export function Chat({ viewer }: { viewer: string }) {
+export function Chat({
+  participantId,
+}: {
+  participantId: Id<"participants">;
+}) {
   const [newMessageText, setNewMessageText] = useState("");
-  const messages = useQuery(api.messages.list);
-  const sendMessage = useMutation(api.messages.send);
+  const messages = useQuery(
+    api.chatbot.getHistory,
+    {
+      participantId,
+    },
+  );
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const sendMessage = useAction(
+    api.chatbot.sendMessage,
+  );
+
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
-    setNewMessageText("");
-    sendMessage({ body: newMessageText, author: viewer }).catch((error) => {
-      console.error("Failed to send message:", error);
+
+    const text = newMessageText.trim();
+
+  if (!text) {
+    return;
+  }
+
+  setNewMessageText("");
+
+  try {
+    await sendMessage({
+      participantId,
+      message: text,
     });
-  };
+  } catch (error) {
+    console.error(
+      "Failed to send message:",
+      error,
+    );
+  }
+};
 
   return (
     <>
       <MessageList messages={messages}>
         {messages?.map((message) => (
-          <Message key={message._id} author={message.author} viewer={viewer}>
-            {message.body}
+          <Message
+            key={`${message.timestamp}-${message.role}`}
+            author={message.role}
+            viewer={message.role}
+          >
+            {message.content}
           </Message>
         ))}
       </MessageList>
