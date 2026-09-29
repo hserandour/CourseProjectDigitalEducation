@@ -1,8 +1,12 @@
 "use client";
 
-import { useMutation, useQuery } from "convex/react";
+import {
+  useMutation,
+  useQuery,
+} from "convex/react";
 
 import { api } from "@/convex/_generated/api";
+import type { Id } from "@/convex/_generated/dataModel";
 
 import { Questionnaire } from "@/components/experiment/Questionnaire";
 
@@ -18,14 +22,13 @@ export default function QuestionnairePage() {
   const router = useRouter();
 
   const participantId =
-    getParticipantId();
+    getParticipantId() as Id<"participants"> | null;
 
   const participant = useQuery(
     api.participants.get,
     participantId
       ? {
-          participantId:
-            participantId as any,
+          participantId,
         }
       : "skip",
   );
@@ -59,9 +62,7 @@ export default function QuestionnairePage() {
         </h1>
 
         <Questionnaire
-          questions={
-            initialQuestions
-          }
+          questions={initialQuestions}
           onSubmit={async (answers) => {
             await saveAnswers({
               participantId:

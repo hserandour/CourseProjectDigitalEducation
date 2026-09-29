@@ -1,29 +1,36 @@
-"use client";
-
-const PARTICIPANT_KEY =
-  "experiment-participant-id";
+const PARTICIPANT_ID_KEY = "participantId";
 
 export function saveParticipantId(
-  id: string,
+  participantId: string,
 ) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
   localStorage.setItem(
-    PARTICIPANT_KEY,
-    id,
+    PARTICIPANT_ID_KEY,
+    participantId,
   );
 }
 
-export function getParticipantId() {
+export function getParticipantId():
+  | string
+  | null {
   if (typeof window === "undefined") {
     return null;
   }
 
   return localStorage.getItem(
-    PARTICIPANT_KEY,
+    PARTICIPANT_ID_KEY,
   );
 }
 
 export function clearParticipantId() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
   localStorage.removeItem(
-    PARTICIPANT_KEY,
+    PARTICIPANT_ID_KEY,
   );
 }

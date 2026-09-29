@@ -3,17 +3,14 @@
 import { useState } from "react";
 
 import { useMutation } from "convex/react";
-
 import { api } from "@/convex/_generated/api";
+import type { Id } from "@/convex/_generated/dataModel";
 
 import { useRouter } from "next/navigation";
 
-import {
-  saveParticipantId,
-} from "@/lib/participant";
+import { saveParticipantId } from "@/lib/participant";
 
 import { Button } from "@/components/ui/button";
-
 import { Input } from "@/components/ui/input";
 
 import {
@@ -26,19 +23,20 @@ import { Label } from "@/components/ui/label";
 export default function HomePage() {
   const router = useRouter();
 
-  const createParticipant =
-    useMutation(
-      api.participants.create,
-    );
+  const createParticipant = useMutation(
+    api.participants.create,
+  );
 
-  const [pseudonym, setPseudonym] =
-    useState("");
+  const completePage = useMutation(
+    api.participants.completePage,
+  );
+
+  const [pseudonym, setPseudonym] = useState("");
 
   const [condition, setCondition] =
     useState<"A" | "B" | "">("");
 
-  const [loading, setLoading] =
-    useState(false);
+  const [loading, setLoading] = useState(false);
 
   const canContinue =
     pseudonym.trim().length > 0 &&
@@ -52,23 +50,32 @@ export default function HomePage() {
     setLoading(true);
 
     try {
-      const participantId =
-        await createParticipant({
-          pseudonym:
-            pseudonym.trim(),
+      // 1. Create the participant.
+      const participantId = await createParticipant({
+        pseudonym: pseudonym.trim(),
+        condition: condition as "A" | "B",
+      });
 
-          condition:
-            condition as "A" | "B",
-        });
+      // 2. Registration is page 1.
+      // Advance the participant to page 2.
+      await completePage({
+        participantId:
+          participantId as Id<"participants">,
+        page: 1,
+        nextPage: 2,
+      });
 
-      saveParticipantId(
-        participantId,
+      // 3. Store the participant ID locally.
+      saveParticipantId(participantId);
+
+      // 4. Go to the questionnaire.
+      router.push("/questionnaire");
+    } catch (error) {
+      console.error(
+        "Failed to start experiment:",
+        error,
       );
 
-      router.push(
-        "/questionnaire",
-      );
-    } finally {
       setLoading(false);
     }
   }
@@ -96,9 +103,7 @@ export default function HomePage() {
             <Input
               value={pseudonym}
               onChange={(event) =>
-                setPseudonym(
-                  event.target.value,
-                )
+                setPseudonym(event.target.value)
               }
               placeholder="Your pseudonym"
             />
@@ -145,10 +150,7 @@ export default function HomePage() {
 
           <Button
             className="w-full"
-            disabled={
-              !canContinue ||
-              loading
-            }
+            disabled={!canContinue || loading}
             onClick={handleSubmit}
           >
             {loading

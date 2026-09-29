@@ -34,6 +34,8 @@ export default defineSchema({
     completedPages: v.array(v.number()),
 
     // Page 4
+    page4StartedAt: v.optional(v.number()),
+
     page4Text: v.optional(v.string()),
 
     page4ChatHistory: v.optional(
