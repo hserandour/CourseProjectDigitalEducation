@@ -4,6 +4,7 @@ import { v } from "convex/values";
 const app = defineApp({
   env: {
     OPENAI_API_KEY: v.string(),
+    OPENROUTER_API_KEY: v.string(),
   },
 });
 
