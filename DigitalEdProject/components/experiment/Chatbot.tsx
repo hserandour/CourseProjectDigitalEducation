@@ -126,8 +126,7 @@ export function Chatbot() {
           </h1>
 
           <p className="text-muted-foreground">
-            Interact with the chatbot
-            according to the instructions.
+            You now have the ability to chat to Skanderbeg! You can ask him whatever you like about his life and experiences.
           </p>
         </div>
 
