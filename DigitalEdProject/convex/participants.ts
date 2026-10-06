@@ -3,6 +3,7 @@ import {
   query,
 } from "./_generated/server";
 
+import { internal } from "./_generated/api";
 import { v } from "convex/values";
 
 export const create = mutation({
@@ -196,6 +197,18 @@ export const startPage4 = mutation({
         updatedAt: now,
       },
     );
+
+    // Runs only once, since page4StartedAt is
+    // now set.
+    if (participant.condition === "B") {
+      await ctx.scheduler.runAfter(
+        0,
+        internal.chatbot.sendIntro,
+        {
+          participantId: args.participantId,
+        },
+      );
+    }
 
     return now;
   },

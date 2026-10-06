@@ -30,6 +30,14 @@ import {
   Textarea,
 } from "@/components/ui/textarea";
 
+const MAX_WORDS = 300;
+
+function countWords(value: string) {
+  return value
+    .split(/\s+/)
+    .filter(Boolean).length;
+}
+
 export default function WritingPage() {
   const router = useRouter();
 
@@ -106,14 +114,25 @@ export default function WritingPage() {
 
           <Textarea
             value={text}
-            onChange={(event) =>
-              setText(
-                event.target.value,
-              )
-            }
+            onChange={(event) => {
+              // Block edits beyond the word limit
+              if (
+                countWords(
+                  event.target.value,
+                ) <= MAX_WORDS
+              ) {
+                setText(
+                  event.target.value,
+                );
+              }
+            }}
             className="min-h-[350px]"
             placeholder="Write your answer..."
           />
+
+          <p className="text-right text-sm text-muted-foreground">
+            {countWords(text)} / {MAX_WORDS} words
+          </p>
 
           <PageNavigation
             previousHref="/task"

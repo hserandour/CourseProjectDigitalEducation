@@ -10,6 +10,8 @@ import { api } from "@/convex/_generated/api";
 
 import { useRouter } from "next/navigation";
 
+import ReactMarkdown from "react-markdown";
+
 import {
   getParticipantId,
 } from "@/lib/participant";
@@ -138,15 +140,23 @@ export function Chatbot() {
                   className={
                     item.role === "user"
                       ? "ml-auto max-w-[80%] rounded-xl bg-primary p-3 text-primary-foreground"
-                      : "mr-auto max-w-[80%] rounded-xl bg-muted p-3"
+                      : "mr-auto max-w-[80%] space-y-2 rounded-xl bg-muted p-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:pl-5"
                   }
                 >
-                  {item.content}
+                  {item.role === "user" ? (
+                    item.content
+                  ) : (
+                    <ReactMarkdown>
+                      {item.content}
+                    </ReactMarkdown>
+                  )}
                 </div>
               ),
             )}
 
-            {sending && (
+            {/* Empty history = intro still generating */}
+            {(sending ||
+              history?.length === 0) && (
               <div className="mr-auto rounded-xl bg-muted p-3">
                 Thinking...
               </div>

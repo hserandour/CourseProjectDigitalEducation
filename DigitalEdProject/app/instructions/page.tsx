@@ -12,6 +12,8 @@ import { PageNavigation } from "@/components/experiment/PageNavigation";
 
 import { getParticipantId } from "@/lib/participant";
 
+import albaniaMap from "./albania-map.png";
+
 export default function InstructionsPage() {
   const router = useRouter();
 
@@ -39,7 +41,7 @@ export default function InstructionsPage() {
 
             <h3 className="pt-2 text-xl font-semibold">The situation of Albania</h3>
             <img
-              src="DigitalEdProject/app/instructions/albania-map.png"
+              src={albaniaMap.src}
               alt="Placeholder: Map of Albania in the 15th century"
               width={600}
               height={400}
