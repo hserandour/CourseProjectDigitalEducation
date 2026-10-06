@@ -41,7 +41,7 @@ export default function InstructionsPage() {
 
             <h3 className="pt-2 text-xl font-semibold">The situation of Albania</h3>
             <img
-              src={"https://commons.wikimedia.org/wiki/File:Venice1400.png"}
+              src="https://commons.wikimedia.org/wiki/File:Venice1400.png"
               alt="Placeholder: Map of Albania in the 15th century"
               width={600}
               height={400}
