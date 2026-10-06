@@ -22,37 +22,76 @@ export type Question =
 
 export const initialQuestions: Question[] = [
   {
-    id: "initial-q1",
+    id: "Age",
     type: "open",
     question:
-      "What is your first impression of the task?",
+      "How old are you?",
+    required: false,
+  },
+
+  {
+    id: "Gender",
+    type: "single",
+    question:
+      "What gender do you identify as?",
+    options: [
+      "Female",
+      "Male",
+      "Non-binary",
+      "Prefer not to say",
+    ],
+    required: false,
+  },
+
+  {
+    id: "Divergent-creativity",
+    type: "open",
+    question:
+      "Name 10 nouns that are as different to each other as possible. Try not to take more than 1.5 minutes. Seperate them by ,",
     required: true,
   },
 
   {
-    id: "initial-q2",
+    id: "Chatbot-usage-frequency",
     type: "single",
     question:
-      "How familiar are you with this subject?",
+      "How often do you use AI chatbots for writing (e.g. emails, homework)?",
     options: [
-      "Not at all",
-      "Slightly",
-      "Moderately",
-      "Very",
+      "Daily",
+      "Multiple times a week",
+      "Once a week",
+      "Once per month",
+      "Less often than once per month"
     ],
     required: true,
   },
 
   {
-    id: "initial-q3",
-    type: "mcq",
+    id: "Prior-knowledge-skanderbeg",
+    type: "single",
     question:
-      "Which of the following apply to you?",
+      "How much do you think you know about Skanderbeg/İskender Bey?",
     options: [
-      "Option A",
-      "Option B",
-      "Option C",
-      "Option D",
+      "Nothing at all",
+      "A little",
+      "Somewhat",
+      "Quite a bit",
+      "A lot"
+    ],
+    required: true,
+  },
+
+  {
+    id: "Prior-knowledge-balkans",
+    type: "single",
+    question:
+      "How much do you think you know about the 14th century Balkans?",
+    options: [
+      "Nothing at all",
+      "A little",
+      "Somewhat",
+      "Quite a bit",
+      "A lot"
     ],
     required: true,
   },
