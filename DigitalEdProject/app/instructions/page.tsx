@@ -39,8 +39,8 @@ export default function InstructionsPage() {
 
             <h3 className="pt-2 text-xl font-semibold">The situation of Albania</h3>
             <img
-              src="albania-map.png"
-              alt="Placeholder: map of Albania in the 15th century"
+              src="DigitalEdProject/app/instructions/albania-map.png"
+              alt="Placeholder: Map of Albania in the 15th century"
               width={600}
               height={400}
               className="h-auto max-w-full rounded-lg"
@@ -54,7 +54,7 @@ export default function InstructionsPage() {
 
             <h3 className="pt-2 text-xl font-semibold">The neighbouring powers</h3>
             <p>Several outside powers had interests in Albania:</p>
-            <ul className="list-disc space-y-2 pl-6">
+            <ul>
               <li>The Republic of Venice was a wealthy trading state that controlled many coastal towns. Venice cared mainly about trade and security, so it was sometimes an ally of the Albanian lords and sometimes a rival.</li>
               <li>The Kingdom of Naples ruled southern Italy under the Aragonese kings Alfonso V and later Ferdinand I. It became Skanderbeg’s most reliable supporter.</li>
               <li>The Pope in Rome repeatedly called for a crusade against the Ottomans, but he could offer more encouragement than money or soldiers.</li>

@@ -97,7 +97,7 @@ export default function WritingPage() {
 
           <p className="text-muted-foreground">
             Write a 300 word creative short story about Skanderbeg including the following three words: 
-            <ul className="list-disc space-y-2 pl-6">
+            <ul>
               <li>Amulet</li>
               <li>Winter</li>
               <li>Sword</li>
