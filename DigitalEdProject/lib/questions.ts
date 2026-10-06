@@ -268,26 +268,20 @@ export const quizQuestions: Question[] = [
 ];
 
 export const finalQuestions: Question[] = [
+
   {
-    id: "final-q1",
-    type: "single",
+    id: "final-q2",
+    type: "open",
     question:
-      "How difficult did you find the task?",
-    options: [
-      "Very easy",
-      "Easy",
-      "Moderate",
-      "Difficult",
-      "Very difficult",
-    ],
-    required: true,
+      "What did you think of your format of learning (reading text, intearcting with chatbot) about Skanderbeg?",
+    required: false,
   },
 
   {
     id: "final-q2",
     type: "open",
     question:
-      "Do you have any additional comments?",
+      "If you read a text, would you have preferred to interact with a chatbot roleplying as Skanderbeg instead? If you interacted with the AI, would you have preffered to read a text instead? Why? Why not?",
     required: false,
   },
 ];
