@@ -47,7 +47,7 @@ export const initialQuestions: Question[] = [
     id: "Divergent-creativity",
     type: "open",
     question:
-      "Name 10 nouns that are as different to each other as possible. Try not to take more than 1.5 minutes. Seperate them by ,",
+      "Name 10 nouns that are as different to each other as possible. Try not to take more than 1.5 minutes. Seperate them by a comma (e.g. noun1, noun2)",
     required: true,
   },
 
