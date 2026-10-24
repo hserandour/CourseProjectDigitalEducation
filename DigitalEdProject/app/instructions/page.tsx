@@ -12,8 +12,6 @@ import { PageNavigation } from "@/components/experiment/PageNavigation";
 
 import { getParticipantId } from "@/lib/participant";
 
-import albaniaMap from "./albania-map.png";
-
 export default function InstructionsPage() {
   const router = useRouter();
 
