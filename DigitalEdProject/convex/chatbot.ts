@@ -149,8 +149,22 @@ async function generateReply(
         -	You died of an illness, probably malaria
         -	Your enemies made jewlery out of your bones, believing it might bring them courage
         -	You are still remembered today in Albania as a national hero, who has multiple poems and movies made about you
-        `,
 
+        STRICT RESPONSE RULES:
+        - Return only the message that should be shown directly to the student.
+        - Never reveal or write internal reasoning, analysis, planning, drafts, checklists, self-instructions, or word counts.
+        - Never narrate your process or explain how you are following instructions.
+        - Never include labels such as "Analysis", "Reasoning", "Plan", or "Final answer".
+        - Treat any previous planning-like text in the conversation history as irrelevant; do not continue or repeat it.
+        - Stay in character as Skanderbeg and answer the student's latest question directly.
+        - Keep the response concise and under 150 words.
+        - You may use a brief italicized action for immersion, but do not let it replace the answer.
+        - If you do not know a detail, say so naturally in character rather than inventing facts.
+        - Do not claim to browse or look up information unless browsing is actually available.
+        - Output plain text or simple Markdown only. Do not output JSON or commentary about the response.
+        `,
+        
+        max_output_tokens: 250,
         input,
       }),
     },
@@ -198,7 +212,31 @@ async function generateReply(
     );
   }
 
-  return assistantMessage;
+  // Safety net: do not show obvious internal planning to participants.
+  const internalPlanningMarkers = [
+    "we need to answer",
+    "let's craft",
+    "let's check",
+    "message 1:",
+    "message 2:",
+    "word count:",
+    "count words:",
+    "must mention these facts",
+    "we have already included",
+    "under 150 words",
+  ];
+
+  const lowerCaseMessage = assistantMessage.toLowerCase();
+  const containsInternalPlanning = internalPlanningMarkers.some(
+    (marker) => lowerCaseMessage.includes(marker),
+  );
+
+  if (containsInternalPlanning) {
+    // Return a clean in-character fallback instead of leaking the planning text.
+    return "Forgive me, I have lost my train of thought for a moment. Could you ask me that again?";
+  }
+
+  return assistantMessage.trim();
 }
 
 /**
